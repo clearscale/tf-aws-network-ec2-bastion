@@ -59,6 +59,38 @@ There is a good article written about how to do this from scratch by [Kunal Namd
 
 https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-enable-ssh-connections.html
 
+## Usage
+
+All values with the comment `#CHANGE` must be updated based on the AWS account, region, and networking resources.
+
+```
+module "bastion" {
+  source = "github.com/clearscale/tf-aws-network-ec2-baston.git?ref=v1.0.0"
+
+  account = {
+    id = "*", name = "dev", provider = "aws", key = "current", region = "us-west-1"
+  }
+
+  prefix             = "cs"
+  client             = "ClearScale"
+  project            = "pmod"
+  env                = "dev"
+  region             = "us-west-1"             # CHANGE
+  name               = "bastion"
+  az                 = "AZ_FOR_SUBNET"         # CHANGE BASED ON SUBNET ID AND REGION
+  vpc_id             = "VPC_ID"                # CHANGE
+  subnet_ids         = ["SUBNET_ID"]           # CHANGE
+  ec2_ami            = "ami-0aec1cbfa00609468" # CHANGE: Windows Server AMI
+  ec2_start          = true
+  ec2_key            = ""
+  ec2_key_name       = "SSH_KEY_NAME"          # CHANGE
+  ec2_type           = "t3.nano"
+  ec2_ip_private     = "10.21.16.4"            # CHANGE BASED ON SUBNET
+  ec2_ip_public_auto = false
+  ec2_script         = null
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -70,7 +102,7 @@ https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-get
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.45.0 |
 
 ## Modules
 
@@ -124,5 +156,7 @@ https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-get
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_ec2_id"></a> [ec2\_id](#output\_ec2\_id) | The ID of the EC2 Instance that is created. |
 <!-- END_TF_DOCS -->
