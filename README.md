@@ -65,7 +65,7 @@ All values with the comment `#CHANGE` must be updated based on the AWS account, 
 
 ```
 module "bastion" {
-  source = "github.com/clearscale/tf-aws-network-ec2-baston.git?ref=v1.0.0"
+  source = "github.com/clearscale/tf-aws-network-ec2-bastion?ref=v1.0.0"
 
   account = {
     id = "*", name = "dev", provider = "aws", key = "current", region = "us-west-1"
